@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <header className='py-5 px-5 flex items-center justify-between'>
       <Link href='/'>
-        <h4 className='font-popins font-bold text-xl'>신상</h4>
+        <h4 className='font-popins font-bold text-xl'>신상 프로젝트</h4>
       </Link>
       <div className='flex m-2'>
         <div className='mr-2'>

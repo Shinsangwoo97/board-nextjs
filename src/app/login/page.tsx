@@ -42,8 +42,8 @@ export default function Home() {
       <div>
         <div className='p-6'>
           <div className='font-bold flex flex-col items-center pt-10'>
-            <div className='text-3xl italic'>신상</div>
-            <div className='text-sm'>shinsang</div>
+            <div className='text-3xl italic'>신상 프로젝트</div>
+            <div className='text-sm'>Shinsang Project</div>
           </div>
           <div className='flex flex-col items-center pt-10 '>
             {/* 이메일 입력창 */}
