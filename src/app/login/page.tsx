@@ -3,12 +3,16 @@ import { useEffect, useState, ChangeEvent, FormEvent } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Input from '../components/Input';
+import { useRouter } from 'next/navigation';
+
+const axios = require('axios');
 
 export default function Home() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const router = useRouter();
 
   const login_button_click = async () => {
     console.log('로그인');
@@ -35,6 +39,12 @@ export default function Home() {
     const { value } = e.target;
     setPassword(value);
     setPasswordError(!validatePassword(value));
+  };
+
+  const kakao_login = async () => {
+    // const KAKAO_AUTH_URL = `https:/kauth.kakao.com/oauth/authorize?client_id=c7c24feb0cd407c889411dd192a5b7a8&redirect_uri=http://localhost:8080/oauth/kakao&response_type=code`;
+    const KAKAO_AUTH_URL = `https:/kauth.kakao.com/oauth/authorize?client_id=c7c24feb0cd407c889411dd192a5b7a8&redirect_uri=http://localhost:3000/kakao/callback&response_type=code`;
+    window.location.href = KAKAO_AUTH_URL;
   };
 
   return (
@@ -123,8 +133,9 @@ export default function Home() {
             </div>
             <div className='m-6'>
               <div>
-                {/* 이주소는 만들어줘야함 */}
-                <Link href='https:/kauth.kakao.com/oauth/authorize?client_id=c7c24feb0cd407c889411dd192a5b7a8&redirect_uri=http://localhost:8080/oauth/kakao&response_type=code'>
+                {/* 이주소는 만들어줘야함 TODO: 이링크 따로뺴줘야함 */}
+                <button onClick={kakao_login}>
+                  {/* href='https:/kauth.kakao.com/oauth/authorize?client_id=c7c24feb0cd407c889411dd192a5b7a8&redirect_uri=http://localhost:8080/oauth/kakao&response_type=code'> */}
                   <Image
                     src={`/icon/kakao_login.png`}
                     alt='카카오 로그인'
@@ -134,7 +145,7 @@ export default function Home() {
                     width={300}
                     height={300}
                   />
-                </Link>
+                </button>
               </div>
             </div>
           </div>
