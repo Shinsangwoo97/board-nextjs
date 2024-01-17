@@ -50,7 +50,8 @@ const Header = () => {
           </div>
           <div>
             <div>
-              <Image src={user_image} width={30} height={30} alt='' />
+            <Image src={user_image ?? ''} width={30} height={30} alt='' />
+              {/* <Image src={user_image} width={30} height={30} alt='' /> */}
             </div>
             <div>{user_nickname}</div>
           </div>
