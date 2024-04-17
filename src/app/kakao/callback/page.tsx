@@ -16,9 +16,9 @@ export default function Home() {
         const res = await axios.get(
           `http://localhost:8080/oauth/kakao?code=${code}`
         );
-        // console.log(res);
+        console.log(res);
         const token = res.headers.authorization;
-        // console.log(token);
+        console.log(token);
         window.localStorage.setItem('token', token);
         router.push('/');
         window.location.reload();

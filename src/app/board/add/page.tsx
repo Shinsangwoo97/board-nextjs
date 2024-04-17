@@ -22,17 +22,19 @@ export default function Home() {
     });
   };
   const handleSubmit = async () => {
-    console.log('눌렀어요');
     const post_data = {
       title: title,
       content: content,
-      image: image.file,
     };
+
+    const formData = new FormData();
+    formData.append("image", image.file);
+    formData.append("post_data", JSON.stringify(post_data));
 
     try {
       let result = await axios.post(
         'http://localhost:8080/api/board/add',
-        post_data
+        formData
       );
       if (result.data.success === 0) {
         Swal.fire('알림', result.data.message);

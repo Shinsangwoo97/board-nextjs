@@ -61,7 +61,7 @@ export default function Input({
         onFocus={handleFocus}
         onBlur={handleBlur}
         style={{
-          borderBottom: `2px solid ${error ? "red" : "black"}`,
+          borderBottom: `2px solid transparent`, // 밑줄을 투명으로 설정
           boxShadow: "none",
           borderWidth: isFocused ? "2px" : "1px",
         }}

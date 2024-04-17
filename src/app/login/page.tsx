@@ -1,11 +1,10 @@
 'use client';
-import { useEffect, useState, ChangeEvent, FormEvent } from 'react';
+
+import React, { useState, ChangeEvent, FormEvent } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Input from '../components/Input';
 import { useRouter } from 'next/navigation';
-
-const axios = require('axios');
 
 export default function Home() {
   const [email, setEmail] = useState('');
@@ -42,118 +41,73 @@ export default function Home() {
   };
 
   const kakao_login = async () => {
-    // const KAKAO_AUTH_URL = `https:/kauth.kakao.com/oauth/authorize?client_id=c7c24feb0cd407c889411dd192a5b7a8&redirect_uri=http://localhost:8080/oauth/kakao&response_type=code`;
     const KAKAO_AUTH_URL = `https:/kauth.kakao.com/oauth/authorize?client_id=c7c24feb0cd407c889411dd192a5b7a8&redirect_uri=http://localhost:3000/kakao/callback&response_type=code`;
     window.location.href = KAKAO_AUTH_URL;
   };
 
   return (
-    <div>
-      <div>
-        <div className='p-6'>
-          <div className='font-bold flex flex-col items-center pt-10'>
-            <div className='text-3xl italic'>신상 프로젝트</div>
-            <div className='text-sm'>Shinsang Project</div>
+    <div className="min-h-screen flex justify-center items-center bg-transparent">
+      <div className="max-w-md w-full px-6 py-8 bg-transparent border border-gray-300 shadow-md rounded-md">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold">신상 프로젝트</h2>
+          <p className="text-sm">Shinsang Project</p>
+        </div>
+        <form className="mt-8" onSubmit={login_button_click}>
+          <div className="mb-4">
+            <label htmlFor="email" className="block text-sm font-medium">
+              이메일
+            </label>
+            <Input
+              type="email"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              placeholder="이메일을 입력하세요"
+              value={email}
+              onChange={handleEmailChange}
+              error={emailError}
+            />
+            {emailError && <div className="text-red-500 text-xs mt-1">유효한 이메일을 입력하세요</div>}
           </div>
-          <div className='flex flex-col items-center pt-10 '>
-            {/* 이메일 입력창 */}
-            <div className='w-full sm:max-w-md'>
-              <div
-                className={emailError ? 'text-red-500 font-bold' : 'font-bold'}
-              >
-                이메일
-              </div>
-              <Input
-                className={emailError ? 'border-red-500' : undefined}
-                placeholder='ex) newplay@ground.co.kr'
-                type='email'
-                autoComplete='off'
-                value={email}
-                onChange={handleEmailChange}
-                onSubmit={login_button_click}
-                error={emailError}
+          <div className="mb-4">
+            <label htmlFor="password" className="block text-sm font-medium">
+              비밀번호
+            </label>
+            <Input
+              type="password"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              placeholder="비밀번호를 입력하세요"
+              value={password}
+              onChange={handlePasswordChange}
+              error={passwordError}
+            />
+            {passwordError && <div className="text-red-500 text-xs mt-1">영문, 숫자, 특수문자를 포함한 8~16자리를 입력하세요</div>}
+          </div>
+          <button
+            type="submit"
+            className="w-full py-3 bg-indigo-600 text-white rounded-md font-medium hover:bg-indigo-700 focus:outline-none focus:bg-indigo-700"
+          >
+            로그인
+          </button>
+        </form>
+        <div className="mt-6 flex justify-center items-center">
+          <div className="text-center text-sm">
+            <Link href="/join" className="underline">회원가입</Link>
+            <span className="mx-2">|</span>
+            <Link href="/passwordFind" className="underline">비밀번호 찾기</Link>
+          </div>
+        </div>
+        <div className="mt-6">
+          <div className="flex justify-center items-center">
+            <button onClick={kakao_login} className="focus:outline-none">
+              <Image
+                src="/icon/kakao_login.png"
+                alt="카카오 로그인"
+                width={300}
+                height={100}
               />
-              {emailError && (
-                <div className='text-red-500 text-sm'>이메일 에러메시지</div>
-              )}
-            </div>
-            {/* 비밀번호 입력창 */}
-            <div className='w-full sm:max-w-md'>
-              <div
-                className={
-                  passwordError ? 'text-red-500 font-bold' : 'font-bold'
-                }
-              >
-                비밀번호
-              </div>
-              <Input
-                className={passwordError ? 'border-red-500' : undefined}
-                placeholder=''
-                type='password'
-                autoComplete='off'
-                value={password}
-                onChange={handlePasswordChange}
-                onSubmit={login_button_click}
-                error={passwordError}
-              />
-              {passwordError && (
-                <div className='text-red-500 text-sm'>비밀번호 에러 메세지</div>
-              )}
-            </div>
-            {/* 로그인 버튼 */}
-            <button
-              type='submit'
-              className='w-full mt-4 p-4 border-solid border-2 font-bold rounded-xl sm:max-w-md'
-              onClick={login_button_click}
-            >
-              로그인
             </button>
-            {/* 회원가입 및 이메일,비밀번호 찾기 */}
-            <div className='opacity-50 mt-5 flex inset-x-0 bottom-0 text-xs gap-2'>
-              <button
-                className='underline'
-                // onClick={() => router.push(`/document/privacy_statement`)}
-              >
-                회원가입 및 이메일, 비밀번호 찾기
-              </button>
-              <div>|</div>
-              <button
-                // onClick={() => router.push(`/document/general_termsand_conditions`)}
-                className='underline'
-              >
-                비밀번호 찾기
-              </button>
-              <div>|</div>
-              <button
-                // onClick={() => router.push(`/document/general_termsand_conditions`)}
-                className='underline'
-              >
-                회원가입
-              </button>
-            </div>
-            <div className='m-6'>
-              <div>
-                {/* 이주소는 만들어줘야함 TODO: 이링크 따로뺴줘야함 */}
-                <button onClick={kakao_login}>
-                  {/* href='https:/kauth.kakao.com/oauth/authorize?client_id=c7c24feb0cd407c889411dd192a5b7a8&redirect_uri=http://localhost:8080/oauth/kakao&response_type=code'> */}
-                  <Image
-                    src={`/icon/kakao_login.png`}
-                    alt='카카오 로그인'
-                    // loading="lazy"
-                    className='w-80 h-16 object-cover object-center rouneded rounded-xl'
-                    priority={true}
-                    width={300}
-                    height={300}
-                  />
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       </div>
     </div>
   );
 }
-
-// https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&scope=account_email
-// https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#request-code-info
